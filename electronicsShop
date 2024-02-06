@@ -181,7 +181,7 @@ void deleteProduct(struct Product *inventory, int *count) {
 }
 
 // Дефиниция на функция за изкарване на записи на конзолата
-void displayInventory(struct Product *inventory, int count) {
+void displayInventory(struct Product *inventory, struct Product *warehouse, int count) {
     printf("\nInventory:\n");
     for (int i = 0; i < count; i++) {
         printf("Product %d:\n", inventory[i].id);
@@ -210,6 +210,36 @@ void displayInventory(struct Product *inventory, int count) {
         printf("Weight: %.2f (rounded up: %.2f)\n", inventory[i].weight, ceil(inventory[i].weight));
         printf("------------------------\n");
     }
+    
+      printf("\nWarehouse:\n");
+    for (int i = 0; i < WAREHOUSE_SIZE; i++) {
+        printf("Product %d:\n", warehouse[i].id);
+        printf("Name: %s\n", warehouse[i].name);
+        printf("Quantity: %d\n", warehouse[i].quantity);
+        printf("Price: %.2f\n", warehouse[i].price);
+        printf("Category: %d\n", warehouse[i].category);
+
+        // Проверка на категорията на продукта и извеждане на съответната информация за електрониката
+        printf("Electronics Info:\n");
+        if (warehouse[i].category == LAPTOP) {
+            printf("Screen Size: %.2f inches\n", warehouse[i].electronicsInfo.screen_size);
+            printf("Processor: %s\n", warehouse[i].electronicsInfo.processor);
+            printf("Memory Size: %d GB\n", warehouse[i].electronicsInfo.memory_size);
+        } else if (warehouse[i].category == SMARTPHONE) {
+            printf("Screen Size: %.2f inches\n", warehouse[i].electronicsInfo.screen_size);
+            printf("Processor: %s\n", warehouse[i].electronicsInfo.processor);
+            printf("Memory Size: %d GB\n", warehouse[i].electronicsInfo.memory_size);
+        } else if (warehouse[i].category == TABLET) {
+            printf("Screen Size: %.2f inches\n", warehouse[i].electronicsInfo.screen_size);
+            printf("Processor: %s\n", warehouse[i].electronicsInfo.processor);
+            printf("Memory Size: %d GB\n", warehouse[i].electronicsInfo.memory_size);
+        }
+
+        // Използване на ceil за закръгляне на теглото нагоре
+        printf("Weight: %.2f (rounded up: %.2f)\n", warehouse[i].weight, ceil(warehouse[i].weight));
+        printf("------------------------\n");
+    }
+    
 }
 
 // Дефиниция на функция за заявка на артикул от склада
@@ -262,7 +292,7 @@ int main() {
                 deleteProduct(inventory, &count);
                 break;
             case 3:
-                displayInventory(inventory, count);
+                displayInventory(inventory, warehouse, count);
                 break;
             case 4:
                 saveToFile(inventory, count);
